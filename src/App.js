@@ -9,12 +9,13 @@ import Home from './components/Home';
 import About from './components/About';
 import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
-
+import AlertState from './context/alert/AlertState';
 
 function App() {
   return (
     <>
     <Router basename='/'>
+      <AlertState>
       <NoteState>
       <Navbar/>
       <Routes>
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/about" element={<About/>}/>
       </Routes>
       </NoteState>
+      </AlertState>
     </Router>
     </>
     

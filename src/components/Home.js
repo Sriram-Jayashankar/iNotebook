@@ -1,12 +1,13 @@
 import React from 'react'
 import Notes from './Notes'
+import AddNoteform from './AddNoteform'
+import Alert from './Alert'
 export default function Home() {
 
   return (
     <div >
-      <h1 style={{textAlign:"center"}} >
-        This is your notes 
-      </h1>
+      <Alert message="succesfully deleted"/>
+      <AddNoteform/>
       <Notes/>
     </div>
   )
