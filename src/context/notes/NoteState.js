@@ -14,9 +14,9 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
       },
-       // body data type must match "Content-Type" header
+      // body data type must match "Content-Type" header
     });
-    const jsonfetch =await response.json();
+    const jsonfetch = await response.json();
     console.log(jsonfetch)
     setnotes(jsonfetch)
     //setnotes
@@ -57,16 +57,16 @@ const NoteState = (props) => {
   }
 
   //fn to del note that has to be accesed by everyone as a prop 
-  const deletenote = async(id) => {
+  const deletenote = async (id) => {
     const response = await fetch(`${backendhost}/api/notes/deletenode/${id}`, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
         "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
       }
-       // body data type must match "Content-Type" header
+      // body data type must match "Content-Type" header
     });
-    const jsondel =await response.json();
+    const jsondel = await response.json();
     console.log(jsondel)
 
     getallnotes()
@@ -91,38 +91,41 @@ const NoteState = (props) => {
     });
     const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
     console.log(jsonupdate)
-    // getallnotes()
-
 
     getallnotes()
+  };
 
-    // const { title, description, tag } = updatednote;
+  const login = async (logincred) => {
+    //api call
 
-    // // Assuming your notes state is an array of objects
-    // setnotes((prevNotes) => {
-    //   // Find the index of the note to be updated
-    //   const index = prevNotes.findIndex((note) => note._id === id);
-
-    //   // If the note is found, update it; otherwise, return the original state
-    //   if (index !== -1) {
-    //     // Create a new array with the updated note
-    //     const updatedNotes = [...prevNotes];
-    //     updatedNotes[index] = {
-    //       ...updatedNotes[index],
-    //       title,
-    //       description,
-    //       tag,
-    //     };
-    //     return updatedNotes;
-    //   } else {
-    //     return prevNotes;
-    //   }
-    // });
+    const response = await fetch(`${backendhost}/api/auth/login`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(logincred), // body data type must match "Content-Type" header
+    });
+    const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
+    console.log(jsonupdate)
   };
 
 
+  const signup = async (signupcred) => {
+    //api call
+
+    const response = await fetch(`${backendhost}/api/auth/createuser`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupcred), // body data type must match "Content-Type" header
+    });
+    const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
+    console.log(jsonupdate)
+  };
+
   return (
-    <NoteContext.Provider value={{ notes, addnote, deletenote, updatenote ,getallnotes}}>
+    <NoteContext.Provider value={{ notes, addnote, deletenote, updatenote, getallnotes,login,signup }}>
       {props.children}
     </NoteContext.Provider>
   )
