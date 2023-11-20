@@ -15,7 +15,7 @@ export default function AlertState(props) {
         })
         setTimeout(() => {
             setalert({});
-          }, 5000);
+          }, 1000);
 
     }
 

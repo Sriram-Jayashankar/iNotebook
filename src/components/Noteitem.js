@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react'
 import NoteContext from '../context/notes/noteContext'
 
 export default function Noteitem(props) {
-  const {deletenote,updatenote}=useContext(NoteContext)
-    const {note}=props
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+  const {deletenote}=useContext(NoteContext)
+    const {note,updateNote}=props
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Asia/Kolkata' };
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(note.date));
 
     const [isHovered, setIsHovered] = useState(false);
@@ -31,14 +31,7 @@ export default function Noteitem(props) {
 
 
     //function to update node
-    const updatenotefn=()=>{
-      const updatenoteto={
-        title:"yaay",
-        description:"why",
-        tag:"taggy"
-      }
-      updatenote(note._id,updatenoteto)
-    }
+  
   return (
     <>
     <div className="container my-3 mx-3" >
@@ -56,7 +49,7 @@ export default function Noteitem(props) {
       </div>
 
 
-      <div onClick={updatenotefn} className="d-inline-flex align-items-baseline" style={{cursor: "pointer"}}onMouseEnter={handleMouseEnter}       onMouseLeave={handleMouseLeave}>
+      <div onClick={()=>{updateNote(note)}} className="d-inline-flex align-items-baseline" style={{cursor: "pointer"}}onMouseEnter={handleMouseEnter}       onMouseLeave={handleMouseLeave}>
       <i className="fa-solid fa-pen-to-square mx-3"></i>
       { isHovered?  <p>Edit</p> :null }
       </div>
