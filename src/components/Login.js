@@ -1,8 +1,11 @@
 import React,{useContext, useState} from 'react'
 import NoteContext from '../context/notes/noteContext'
 import { useNavigate  } from "react-router-dom";
+import AlertContext from "../context/alert/alertContext"
 
 const Login = () => {
+
+  const {addalert}=useContext(AlertContext)
 
   const {login}=useContext(NoteContext)
   let navigate = useNavigate ();
@@ -23,8 +26,11 @@ const Login = () => {
     await login(cred)
     navigate("/");
 
-    console.log("login successful")
-  }
+    const alert={
+      type:"success",
+      message:"successfulyy logged in"
+    }
+    addalert(alert)  }
 
   return (
     <>

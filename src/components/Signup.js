@@ -1,9 +1,11 @@
 import React,{useContext, useState} from 'react'
 import NoteContext from '../context/notes/noteContext'
 import { useNavigate  } from "react-router-dom";
+import AlertContext from "../context/alert/alertContext"
 
 export default function Signup() {
 
+  const {addalert}=useContext(AlertContext)
 
 
   const {signup}=useContext(NoteContext)
@@ -24,10 +26,13 @@ export default function Signup() {
   {
     e.preventDefault()
     await signup(cred)
-    navigate("/login");
+    navigate("/");
 
-    console.log("login successful")
-  }
+    const alert={
+      type:"success",
+      message:"successfulyy signed up"
+    }
+    addalert(alert)  }
 
 
   return (

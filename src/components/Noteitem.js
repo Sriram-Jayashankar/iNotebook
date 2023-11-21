@@ -1,7 +1,11 @@
 import React, { useContext, useState } from 'react'
 import NoteContext from '../context/notes/noteContext'
+import AlertContext from "../context/alert/alertContext"
 
 export default function Noteitem(props) {
+
+  const {addalert}=useContext(AlertContext)
+
   const {deletenote}=useContext(NoteContext)
     const {note,updateNote}=props
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Asia/Kolkata' };
@@ -25,12 +29,22 @@ export default function Noteitem(props) {
 
 
     //function to delete node
-    const deletenodefn=()=>{
-      deletenote(note._id)
+    const deletenodefn=async()=>{
+      await deletenote(note._id)
+      //to display alert
+      const alert={
+        type:"success",
+        message:"successfulyy deleted"
+      }
+      addalert(alert)
     }
 
 
     //function to update node
+    const updatenodefn=async()=>{
+      await updateNote(note)
+      
+    }
   
   return (
     <>
@@ -49,7 +63,7 @@ export default function Noteitem(props) {
       </div>
 
 
-      <div onClick={()=>{updateNote(note)}} className="d-inline-flex align-items-baseline" style={{cursor: "pointer"}}onMouseEnter={handleMouseEnter}       onMouseLeave={handleMouseLeave}>
+      <div onClick={updatenodefn} className="d-inline-flex align-items-baseline" style={{cursor: "pointer"}}onMouseEnter={handleMouseEnter}       onMouseLeave={handleMouseLeave}>
       <i className="fa-solid fa-pen-to-square mx-3"></i>
       { isHovered?  <p>Edit</p> :null }
       </div>

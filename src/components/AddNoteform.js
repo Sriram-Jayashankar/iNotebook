@@ -17,8 +17,10 @@ export default function AddNoteform() {
         setnote({...note,[e.target.name]:e.target.value})
     }
 
-    const addnotefn=()=>
+    const addnotefn=async()=>
     {
+        await addnote(note)  
+
         //to display alert
         const alert={
             type:"primary",
@@ -26,7 +28,6 @@ export default function AddNoteform() {
         }
         addalert(alert)
         //to add note
-        addnote(note)  
         setnote({title:"",description:"",tag:""})
 
     }

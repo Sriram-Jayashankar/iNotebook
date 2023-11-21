@@ -1,8 +1,11 @@
 import NoteContext from "./noteContext";
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import AlertContext from "../alert/alertContext"
 
 const backendhost = "http://localhost:5000"
 const NoteState = (props) => {
+
+  const {addalert}=useContext(AlertContext)
 
   //use effect hook acting as component did mount 
   const [notes, setnotes] = useState([])
@@ -12,12 +15,11 @@ const NoteState = (props) => {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
-        "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
+        "authtoken": localStorage.getItem('token')
       },
       // body data type must match "Content-Type" header
     });
     const jsonfetch = await response.json();
-    console.log(jsonfetch)
     setnotes(jsonfetch)
     //setnotes
 
@@ -34,7 +36,7 @@ const NoteState = (props) => {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
-        "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
+        "authtoken": localStorage.getItem('token')
       },
       body: JSON.stringify(notefromaddnote), // body data type must match "Content-Type" header
     });
@@ -62,7 +64,7 @@ const NoteState = (props) => {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
-        "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
+        "authtoken": localStorage.getItem('token')
       }
       // body data type must match "Content-Type" header
     });
@@ -85,13 +87,17 @@ const NoteState = (props) => {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
-        "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1NDQ4OTRhNzcwYWEyYzg4N2YxMGUxIn0sImlhdCI6MTcwMDAyMzMyN30.ggCfxZCh-aOi2R2tjSgxdHnzClmuZmtjbfCH3WiyYDs"
+        "authtoken": localStorage.getItem('token')
       },
       body: JSON.stringify(updatednote), // body data type must match "Content-Type" header
     });
     const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
     console.log(jsonupdate)
-
+    const alert={
+      type:"success",
+      message:"successfulyy update"
+    }
+    addalert(alert)
     getallnotes()
   };
 
@@ -105,8 +111,13 @@ const NoteState = (props) => {
       },
       body: JSON.stringify(logincred), // body data type must match "Content-Type" header
     });
-    const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
-    console.log(jsonupdate)
+    const jsonupdate =await response.json(); // parses JSON response into native JavaScript objects
+    if(jsonupdate.type==="success")
+    {
+      console.log(jsonupdate.authtoken)
+
+      localStorage.setItem('token',jsonupdate.authtoken)
+    }
   };
 
 
@@ -121,7 +132,11 @@ const NoteState = (props) => {
       body: JSON.stringify(signupcred), // body data type must match "Content-Type" header
     });
     const jsonupdate = response.json(); // parses JSON response into native JavaScript objects
-    console.log(jsonupdate)
+    if(jsonupdate.type==="success")
+    {
+      console.log(jsonupdate.authtoken)
+      localStorage.setItem('token',jsonupdate.authtoken)
+    }
   };
 
   return (

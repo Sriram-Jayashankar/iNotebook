@@ -12,6 +12,7 @@ import NoteState from './context/notes/NoteState';
 import AlertState from './context/alert/AlertState';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Alert from './components/Alert'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <AlertState>
       <NoteState>
       <Navbar/>
+      <Alert />
       <Routes>
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="/about" element={<About/>}/>
